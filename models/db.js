@@ -39,12 +39,26 @@ try {
   }
 }); //- starting another db connection
 }
-var schema = new mongoose.Schema({
-	account:String,
-	password:String,
-	name:String,
-	icon:String
+var schemaArticals = new mongoose.Schema({
+	title:String,
+  type:String,
+	content:String,
+  zan:Number,
+  view:Number,
+  date:String
+
 },{
     versionKey: false // You should be aware of the outcome after set to false
 })
-module.exports = mongoose.model('accounts' , schema);
+
+var schemaAccount = new mongoose.Schema({
+	account:String,
+	password:String,
+	name:String,
+	icon:String,
+  action:String
+},{
+    versionKey: false // You should be aware of the outcome after set to false
+})
+exports.articals = mongoose.model('articals' , schemaArticals);
+exports.accounts = mongoose.model('accounts' , schemaAccount);
