@@ -10,14 +10,23 @@ const multiparty = require('multiparty');
 const cookieParser = require('cookie-parser')
 const session = require('express-session');
 const morgan = require('morgan');
-//设置跨域访问
+
+const http = require('http');
+const https = require('https');
+var certificate = fs.readFileSync('file.crt', 'utf8');
+var privateKey  = fs.readFileSync('private.pem', 'utf8'),
+credentials = {key: privateKey, cert: certificate};
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+// 设置跨域访问
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", req.headers.origin);
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
     res.header("Access-Control-Allow-Credentials",true); //带cookies
     res.header("X-Powered-By",' 3.2.1')
-    res.header("Content-Type", "application/json;charset=utf-8");
+    // res.header("Content-Type", "application/json;charset=utf-8");
     next();
 });
 
@@ -62,5 +71,10 @@ app.post('/api/artical/uploadimg',function(req,res){
 app.use(function(err,req,res,next) {
   console.log("Error happens",err.stack);
 });
-
-app.listen(3000);
+// app.listen(3000)
+httpServer.listen(3000,function(){
+    console.log('HTTP Server is running on: http://localhost:%s', 3000);
+});
+httpsServer.listen(3001,function(){
+    console.log('HTTPS Server is running on: http://localhost:%s', 3001);
+});
