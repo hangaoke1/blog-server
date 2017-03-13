@@ -1,5 +1,4 @@
-const user = require('./routes/user.js');
-const articals = require('./routes/articals.js');
+const index = require('./routes/index.js');
 const express = require('express');
 const app = express();
 const fs = require('fs')
@@ -16,13 +15,13 @@ const http = require('http');
 const https = require('https');
 var certificate = fs.readFileSync('file.crt', 'utf8');
 var privateKey = fs.readFileSync('private.pem', 'utf8'),
-  credentials = { key: privateKey, cert: certificate };
+credentials = { key: privateKey, cert: certificate };
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 var options = {
-     "host": "127.0.0.1",
-     "port": "6379",
-     "ttl": 60 * 60 * 24 * 30,   //Session的有效期为30天
+  "host": "127.0.0.1",
+  "port": "6379",
+  "ttl": 60 * 60 * 24 * 30, //Session的有效期为30天
 };
 // 设置跨域访问
 app.all('*', function(req, res, next) {
@@ -56,24 +55,9 @@ app.use(cookieParser())
   // 设置 express 根目录
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.use('/',index)
 
-app.get('/', function(req, res) {
-    res.setHeader("Content-Type", "text/html");
-    res.render('index.html')
-  })
-  //用户路由
-app.post('/api/login', user.login)
-app.post('/api/logout', user.logout)
-app.get('/api/user/list', user.list)
-app.post('/api/user/add', user.add)
-app.get('/api/user/getmsg', user.getmsg)
-  //文章路由
-app.post('/api/artical/search', articals.search)
-app.post('/api/artical/add', articals.add)
-app.post('/api/artical/uploadimg', function(req, res) {
-    res.json('')
-  })
-  //error中间件
+  //全局error中间件
 app.use(function(err, req, res, next) {
   console.log("Error happens", err.stack);
 });

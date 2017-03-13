@@ -1,5 +1,5 @@
-const Item = require('../models/db.js').articals;
-exports.search = function(req,res){
+const Item = require('../../models/db.js').articals;
+exports.search = function(req,res,next){
 	var currentPage = parseInt(req.body.page.currentPage);
 	var pageSize = parseInt(req.body.page.pageSize);
 	var query = Item.find({}).sort({'_id':-1});
@@ -28,7 +28,7 @@ exports.search = function(req,res){
 		})
 }
 
-exports.add = function(req,res){
+exports.add = function(req,res,next){
 	if(req.session.user){
 		if(req.session.user.action != 1){
 			var data = resMsg('9993','权限不足')
