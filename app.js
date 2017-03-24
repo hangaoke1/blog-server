@@ -10,30 +10,37 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const morgan = require('morgan');
-
+// console.log(process.env.REMOTE_ADDR)
 const http = require('http');
 const https = require('https');
 var certificate = fs.readFileSync('file.crt', 'utf8');
 var privateKey = fs.readFileSync('private.pem', 'utf8'),
-credentials = { key: privateKey, cert: certificate };
+  credentials = { key: privateKey, cert: certificate };
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 var options = {
   "host": "127.0.0.1",
   "port": "6379",
-  "ttl": 60 * 60 * 24 * 30, //Session的有效期为30天
+  "ttl": 60 * 60 * 1, //Session的有效期为1小时
 };
 // 设置跨域访问
 app.all('*', function(req, res, next) {
+  // console.log(req.headers.origin);
   res.header("Access-Control-Allow-Origin", req.headers.origin);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
   res.header("Access-Control-Allow-Credentials", true); //带cookies
   res.header("X-Powered-By", ' 3.2.1')
     // res.header("Content-Type", "application/json;charset=utf-8");
-  next();
+  if (req.method == 'OPTIONS') {
+    res.send(200);
+  } else if (req.method == 'GET') {
+    req.body = req.query;
+    next();
+  } else {
+    next();
+  }
 });
-
 app.use(morgan('short'));
 app.use(cookieParser('sessiontest'));
 app.use(session({
@@ -42,7 +49,14 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
-//模板引擎
+// handle error
+// app.use(function(req, res, next) {
+//   if (!req.session) {
+//     return next(new Error('redis disconnect!'))
+//   }
+//   next()
+// })
+  //模板引擎
 app.set('views', path.join(__dirname + '/views'));
 app.engine('.html', require('ejs').__express)
 app.set('view engine', 'ejs')
@@ -55,9 +69,10 @@ app.use(cookieParser())
   // 设置 express 根目录
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/',index)
 
-  //全局error中间件
+app.use('/', index)
+
+//全局error中间件
 app.use(function(err, req, res, next) {
   console.log("Error happens", err.stack);
 });

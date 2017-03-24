@@ -1,0 +1,28 @@
+{
+  "apps": [{
+    "name": "blog",
+    "script": "./app.js",
+    "watch": [
+      "./app.js",
+      "routes"
+    ],
+    "ignore_watch": [
+      "node_modules",
+      "public"
+    ],
+    "instances": 2,
+    "exec_mode": "cluster",
+    "log_date_format": "YYYY-MM-DD HH:mm:ss",
+    "error_file": "./logs/app-err.log",
+    "out_file": "./logs/app-out.log",
+    "pid_file": "./logs/app-pid.log",
+    "env": {
+      "NODE_ENV": "production",
+      "REMOTE_ADDR": "env环境"
+    },
+    "env_dev": {
+      "NODE_ENV": "development",
+      "REMOTE_ADDR": "env_dev环境"
+    }
+  }]
+}

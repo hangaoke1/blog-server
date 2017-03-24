@@ -1,0 +1,16 @@
+You have triggered an unhandledRejection, you may have forgotten to catch a Promise rejection:
+MongoError: failed to connect to server [localhost:27017] on first connect
+    at Pool.<anonymous> (d:\work\blog-server\node_modules\.2.1.8@mongodb-core\lib\topologies\server.js:326:35)
+    at emitOne (events.js:96:13)
+    at Pool.emit (events.js:188:7)
+    at Connection.<anonymous> (d:\work\blog-server\node_modules\.2.1.8@mongodb-core\lib\connection\pool.js:270:12)
+    at Connection.g (events.js:291:16)
+    at emitTwo (events.js:106:13)
+    at Connection.emit (events.js:191:7)
+    at Socket.<anonymous> (d:\work\blog-server\node_modules\.2.1.8@mongodb-core\lib\connection\connection.js:175:49)
+    at Socket.g (events.js:291:16)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at emitErrorNT (net.js:1278:8)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:122:9)

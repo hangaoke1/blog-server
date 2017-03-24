@@ -1,0 +1,45 @@
+2017-03-16 14:59:13: env环境
+2017-03-16 14:59:13: HTTP Server is running on: http://localhost:3000
+2017-03-16 14:59:13: HTTPS Server is running on: http://localhost:3001
+2017-03-16 14:59:31: ::1 - GET / HTTP/1.1 200 609 - 8.316 ms
+2017-03-16 14:59:31: ::1 - GET /static/css/app.4feb7e9abb1229ed3e1d944c548eef68.css HTTP/1.1 304 - - 5.344 ms
+2017-03-16 14:59:31: ::1 - GET /static/js/vendor.e7811d5328f9d987a84f.js HTTP/1.1 304 - - 4.075 ms
+2017-03-16 14:59:31: ::1 - GET /static/js/app.3deb11ded45c44659255.js HTTP/1.1 304 - - 3.821 ms
+2017-03-16 15:05:38: ::1 - GET / HTTP/1.1 304 - - 2.849 ms
+2017-03-16 15:05:38: ::1 - GET /static/css/app.4feb7e9abb1229ed3e1d944c548eef68.css HTTP/1.1 304 - - 3.635 ms
+2017-03-16 15:05:38: ::1 - GET /static/js/manifest.22c7c1bd6c86e4e361aa.js HTTP/1.1 304 - - 3.161 ms
+2017-03-16 15:05:38: ::1 - GET /static/js/app.3deb11ded45c44659255.js HTTP/1.1 304 - - 3.336 ms
+2017-03-16 15:05:39: ::1 - GET /api/user/getmsg HTTP/1.1 200 248 - 3.407 ms
+2017-03-16 15:05:39: ::1 - GET /favicon.ico HTTP/1.1 200 9662 - 2.609 ms
+2017-03-16 15:05:41: ::1 - POST /api/artical/search HTTP/1.1 200 116 - 40.372 ms
+2017-03-16 15:05:42: 准备销毁session
+2017-03-16 15:05:42: ::1 - POST /api/user/logout HTTP/1.1 200 48 - 2.856 ms
+2017-03-16 15:05:44: ::1 - POST /api/user/login HTTP/1.1 200 248 - 14.058 ms
+2017-03-16 15:05:47: ::1 - GET / HTTP/1.1 304 - - 1.513 ms
+2017-03-16 15:05:47: ::1 - GET /static/css/app.4feb7e9abb1229ed3e1d944c548eef68.css HTTP/1.1 304 - - 4.536 ms
+2017-03-16 15:05:47: ::1 - GET /static/js/manifest.22c7c1bd6c86e4e361aa.js HTTP/1.1 304 - - 3.904 ms
+2017-03-16 15:05:47: ::1 - GET /static/js/vendor.e7811d5328f9d987a84f.js HTTP/1.1 304 - - 3.791 ms
+2017-03-16 15:05:47: ::1 - POST /api/artical/search HTTP/1.1 200 116 - 3.949 ms
+2017-03-16 15:05:47: ::1 - GET /api/user/getmsg HTTP/1.1 304 - - 2.980 ms
+2017-03-16 15:05:47: ::1 - GET /favicon.ico HTTP/1.1 200 9662 - 0.729 ms
+2017-03-16 15:05:49: ::1 - POST /api/artical/search HTTP/1.1 200 116 - 5.108 ms
+2017-03-16 15:06:38: ::1 - GET / HTTP/1.1 304 - - 1.323 ms
+2017-03-16 15:06:38: ::1 - GET /static/css/app.4feb7e9abb1229ed3e1d944c548eef68.css HTTP/1.1 304 - - 3.389 ms
+2017-03-16 15:06:38: ::1 - GET /static/js/manifest.22c7c1bd6c86e4e361aa.js HTTP/1.1 304 - - 2.191 ms
+2017-03-16 15:06:38: ::1 - GET /static/js/vendor.e7811d5328f9d987a84f.js HTTP/1.1 304 - - 2.574 ms
+2017-03-16 15:06:38: ::1 - POST /api/artical/search HTTP/1.1 200 116 - 8.424 ms
+2017-03-16 15:06:38: ::1 - GET /favicon.ico HTTP/1.1 200 9662 - 0.509 ms
+2017-03-16 15:06:38: ::1 - GET /api/user/getmsg HTTP/1.1 304 - - 9.568 ms
+2017-03-16 15:06:40: 准备销毁session
+2017-03-16 15:06:40: ::1 - POST /api/user/logout HTTP/1.1 200 48 - 1.472 ms
+2017-03-16 15:06:42: ::1 - POST /api/user/login HTTP/1.1 200 248 - 4.952 ms
+2017-03-16 15:06:44: ::1 - GET /static/fonts/icomoon.9f5fd7b.ttf HTTP/1.1 200 15484 - 8.378 ms
+2017-03-16 15:06:58: ::1 - POST /api/artical/add HTTP/1.1 200 54 - 27.211 ms
+2017-03-16 15:07:00: ::1 - POST /api/artical/search HTTP/1.1 200 263 - 6.159 ms
+2017-03-16 15:07:02: ::1 - POST /api/artical/search HTTP/1.1 200 116 - 2.205 ms
+2017-03-16 15:07:07: ::1 - POST /api/artical/search HTTP/1.1 200 263 - 7.164 ms
+2017-03-16 15:07:10: ::1 - POST /api/artical/search HTTP/1.1 200 263 - 7.494 ms
+2017-03-16 15:07:16: 准备销毁session
+2017-03-16 15:07:16: ::1 - POST /api/user/logout HTTP/1.1 200 48 - 1.005 ms
+2017-03-16 15:07:29: Mongoose disconnected
+2017-03-16 15:08:29: Mongoose connected error DisconnectedError: Ran out of retries trying to reconnect to "localhost:27017". Try setting `server.reconnectTries` and `server.reconnectInterval` to something higher.

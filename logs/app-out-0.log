@@ -1,0 +1,17 @@
+2017-03-16 13:56:14: env环境
+2017-03-16 13:56:14: HTTP Server is running on: http://localhost:3000
+2017-03-16 13:56:14: HTTPS Server is running on: http://localhost:3001
+2017-03-16 13:56:15: Mongoose disconnected
+2017-03-16 13:56:15: Mongoose connected error MongoError: failed to connect to server [localhost:27017] on first connect
+2017-03-16 14:59:13: env环境
+2017-03-16 14:59:13: HTTP Server is running on: http://localhost:3000
+2017-03-16 14:59:13: HTTPS Server is running on: http://localhost:3001
+2017-03-16 14:59:31: ::1 - GET /static/js/manifest.22c7c1bd6c86e4e361aa.js HTTP/1.1 304 - - 10.869 ms
+2017-03-16 14:59:31: ::1 - GET /api/user/getmsg HTTP/1.1 200 14 - 3.984 ms
+2017-03-16 14:59:33: ::1 - POST /api/artical/search HTTP/1.1 200 116 - 43.584 ms
+2017-03-16 14:59:35: ::1 - POST /api/user/login HTTP/1.1 200 248 - 20.948 ms
+2017-03-16 15:05:38: ::1 - GET /static/js/vendor.e7811d5328f9d987a84f.js HTTP/1.1 304 - - 1.777 ms
+2017-03-16 15:05:47: ::1 - GET /static/js/app.3deb11ded45c44659255.js HTTP/1.1 304 - - 2.461 ms
+2017-03-16 15:06:38: ::1 - GET /static/js/app.3deb11ded45c44659255.js HTTP/1.1 304 - - 1.368 ms
+2017-03-16 15:07:29: Mongoose disconnected
+2017-03-16 15:08:29: Mongoose connected error DisconnectedError: Ran out of retries trying to reconnect to "localhost:27017". Try setting `server.reconnectTries` and `server.reconnectInterval` to something higher.
