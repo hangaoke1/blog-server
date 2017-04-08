@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+<h1>获得服务器更新</h1>
+<button id='close'>断开sse</button>
+<div id="result"></div>
+
+<script>
+if(typeof(EventSource)!=="undefined")
+  {
+  var source=new EventSource("http://localhost:8000/events");
+  source.onmessage=function(event)
+    {
+    document.getElementById("result").innerHTML+=event.data + "<br />";
+    };
+  }
+else
+  {
+  document.getElementById("result").innerHTML="抱歉，您的浏览器不支持 server-sent 事件 ...";
+  }
+ var closeBtn=document.getElementById('close');
+ closeBtn.onclick=closeSSE;
+ function closeSSE(){
+    source.close();
+    document.getElementById("result").innerHTML+='断开sse链接' + "<br />";
+ }
+</script>
+
+</body>
+</html>

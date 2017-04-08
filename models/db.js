@@ -1,3 +1,4 @@
+console.log('DB模块引用');
 var mongoose = require('mongoose');
 mongoose.Promise = Promise;
 
@@ -38,29 +39,6 @@ try {
     }
   }); //- starting another db connection
 }
-// var schemaArticals = new mongoose.Schema({
-//   title: String,
-//   type: String,
-//   content: String,
-//   zan: Number,
-//   view: Number,
-//   date: String
-
-// }, {
-//   versionKey: false // You should be aware of the outcome after set to false
-// })
-
-// var schemaAccount = new mongoose.Schema({
-//   account: String,
-//   password: String,
-//   name: String,
-//   icon: String,
-//   action: String
-// }, {
-//   versionKey: false // You should be aware of the outcome after set to false
-// })
-// exports.articals = mongoose.model('articals', schemaArticals);
-// exports.accounts = mongoose.model('accounts', schemaAccount);
 
 
 
@@ -85,7 +63,7 @@ var DB = function() {
     this.mongoClient = {};
     this.config = config;
   }
-  //  返回对应表实例
+  //  返回对应表（collection）实例
 DB.prototype.getConnection = function(table_name) {
     if (!table_name) {
       return;
@@ -101,6 +79,7 @@ DB.prototype.getConnection = function(table_name) {
       //构建model
       client = mongoose.model(table_name, nodeSchema);
 
+      //将对应表model存储到DB的mongoClient属性中
       this.mongoClient[table_name] = client;
     }
     return client;
@@ -297,4 +276,5 @@ DB.prototype.where = function(table_name, conditions, options, callback) {
       }
     });
 };
+
 module.exports = new DB();

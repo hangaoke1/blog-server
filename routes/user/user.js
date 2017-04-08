@@ -1,6 +1,23 @@
 const multiparty = require('multiparty');
-// var Item = require('../../models/db.js').accounts;
 const db = require('../../models/db.js');
+const Hutils = require('../../utils/utils.js');
+const resMsg = Hutils.resMsg;
+
+/**
+ * 登陆
+ * /api/user/login
+ * @param  {[type]}   req  
+ * {
+ *   account:"",
+ *   password:""
+ * }
+ * @param  {[type]}   res  
+ * {
+ *   code:"",    状态码
+ *   message:"", 状态信息  
+ *   data:[]     数据
+ * }
+ */
 exports.login = function(req, res, next) {
   const form = new multiparty.Form();
   form.parse(req, function(err, fields, files) {
@@ -31,7 +48,22 @@ exports.login = function(req, res, next) {
   })
 }
 
-exports.logout = function(req, res,next) {
+
+/**
+ * 登出
+ * /api/user/logout
+ * @param  {[type]}   req  
+ * {
+ *   account:"",
+ *   password:""
+ * }
+ * @param  {[type]}   res  
+ * {
+ *   code:"",    状态码
+ *   message:""  状态信息
+ * }
+ */
+exports.logout = function(req, res, next) {
   if (!req.session) {
     return next(new Error('redis disconnect'));
   }
@@ -45,6 +77,22 @@ exports.logout = function(req, res,next) {
     res.json('清先登陆')
   }
 }
+
+/**
+ * 注册
+ * /api/user/add
+ * @param  {[type]}   req  
+ * {
+ *   account:"",
+ *   password:"",
+ *   name:""
+ * }
+ * @param  {[type]}   res  
+ * {
+ *   code:"",    状态码
+ *   message:""  状态信息 
+ * }
+ */
 exports.add = function(req, res, next) {
   const form = new multiparty.Form();
   form.parse(req, function(err, fields, files) {
@@ -52,7 +100,7 @@ exports.add = function(req, res, next) {
     var account = fields.account;
     var password = fields.password;
     var name = fields.name;
-    db.find('schemaAccount', { 'account': account }, function(err, items) {
+    db.find('schemaAccount', { 'account': account }, {}, function(err, items) {
       if (items.length >= 1) {
         var data = resMsg('9995', '账号重复')
         res.json(data);
@@ -73,7 +121,20 @@ exports.add = function(req, res, next) {
   })
 }
 
-exports.getmsg = function(req, res ,next) {
+
+/**
+ * 获取当前用户信息
+ * /api/user/getmsg
+ * @param  {[type]}   req  
+ * {}
+ * @param  {[type]}   res  
+ * {
+ *   code:"",    状态码
+ *   message:"", 状态信息 
+ *   data:""
+ * }
+ */
+exports.getmsg = function(req, res, next) {
   if (!req.session) {
     return next(new Error('redis disconnect'));
   }
@@ -86,20 +147,41 @@ exports.getmsg = function(req, res ,next) {
   }
 }
 
+/**
+ * 获取用户列表
+ * /api/user/list
+ * @param  {[type]}   req  
+ * {}
+ * @param  {[type]}   res  
+ * {
+ *   code:"",    状态码
+ *   message:"", 状态信息 
+ *   data:""
+ * }
+ */
 exports.list = function(req, res, next) {
-  const form = new multiparty.Form();
-  db.getConnection('schemaAccount').find(function(err, items) {
+  db.find('schemaAccount', {}, {_id:0,__v:0}, function(err, items) {
     if (err) return next(err);
-    var item = JSON.stringify(items);
-    res.end(item);
+    var data = resMsg('00', '查询所有用户成功', items)
+    res.json(data);
   })
 }
-
-
-function resMsg(code, message, data) {
-  return {
-    code: code,
-    message: message,
-    data: data || {}
-  }
+/**
+ * 获取注册用户数量
+ * /api/user/count
+ * @param  {[type]}   req  
+ * {}
+ * @param  {[type]}   res  
+ * {
+ *   code:"",    状态码
+ *   message:"", 状态信息 
+ *   data:""
+ * }
+ */
+exports.list = function(req, res, next) {
+  db.count('schemaAccount', {}, function(err, count) {
+    if (err) return next(err);
+    var data = resMsg('00', '查询所有用户成功', count)
+    res.json(data);
+  })
 }
