@@ -66,10 +66,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
   // 设置 express 根目录
 app.use(express.static(path.join(__dirname, 'public')))
-app.use('/hgk',function(req,res){
-  res.end('hello hangaoke2');
-})
-// websocket全网告示快捷入口
+app.use('/hgk', function(req, res) {
+    res.end('hello hangaoke2');
+  })
+  // websocket全网告示快捷入口
 app.use('/warn', function(req, res, next) {
   var time = req.body.time;
   var message = req.body.message;
@@ -77,13 +77,16 @@ app.use('/warn', function(req, res, next) {
     time,
     message
   }
-  // global.io.of('/warnTips').emit('warn', msg);
-  pub.publish('warn', 'Hello world!');
-
-  global.io.of('/warnTips').clients(function(err, clients) {
-    if (err) throw err;
-    res.end('E-boss current  count:' + clients.length);
-  })
+  // pub.publish('hgk','aaaaaaa2');
+  // res.end('hello world')
+  io.of('/warnTips').adapter.customRequest(JSON.stringify(msg), function(err, replies) {
+    console.log(replies); // an array ['hello john', ...] with one element per node
+  });
+  io.of('/warnTips').adapter.clients(function (error, clients) {
+    if (error) throw error;
+    console.log(clients); // => [Anw2LatarvGVVXEIAAAD]
+    res.end('res by app2.js hello world! clients in room1:' + clients.length +'-------'+JSON.stringify(user));
+  });
 })
 app.use('/', index)
 
