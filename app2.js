@@ -23,6 +23,7 @@ var webSocket = require('./socket/warn.js');
 webSocket.listen(httpServer);
 // redis
 var redis = require('./redis/redis.js').reids;
+var sub = require('./redis/redis.js').redis;
 var pub = require('./redis/redis.js').pub;
 // 设置跨域访问
 app.all('*', function(req, res, next) {

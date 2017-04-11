@@ -23,6 +23,7 @@ var webSocket = require('./socket/warn.js');
 webSocket.listen(httpServer);
 // redis
 var redis = require('./redis/redis.js').reids;
+var sub = require('./redis/redis.js').redis;
 var pub = require('./redis/redis.js').pub;
 // 设置跨域访问
 app.all('*', function(req, res, next) {
@@ -77,6 +78,7 @@ app.use('/warn', function(req, res, next) {
       time,
       message
     }
+  console.log(io.of('/warnTips').adapter.sids)
     // pub.publish('hgk','aaaaaaa1');
     // res.end('hello world')
   io.of('/warnTips').adapter.customRequest(JSON.stringify(msg), function(err, replies) {
