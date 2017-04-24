@@ -24,7 +24,7 @@ exports.listen = function(server) {
   warn = io.of('/warnTips');
   // console.log(warn.adapter.__proto__);
   // warn.adapter 是 hgk的实例 同 io._adapter
-  console.log(warn.adapter instanceof hgk)
+  // console.log(warn.adapter instanceof hgk)
   warn.on('connection', function(socket) {
     // 添加redis.on message事件，每增加一个socket就增加一个回掉函数
     // redis.on('message', function(channel, message) {
@@ -34,7 +34,7 @@ exports.listen = function(server) {
     user.push({ account: num, socketID: socket.id });
     num += 1;
     socket.on('account', function(data) {
-      console.log('save account:' + data + 'socketId:' + socket.id);
+      // console.log('save account:' + data + 'socketId:' + socket.id);
     })
     socket.on('hgk', function(data) {
       console.log(data);
@@ -44,10 +44,10 @@ exports.listen = function(server) {
       if (err) { console.log('unknown id') }
       console.log('join success:' + socket.id);
     });
-    warn.adapter.customHook = function(data, cb) {
-      warn.to('room1').emit('warn', JSON.parse(data));
-      cb('hello ' + data);
-    }
+    // warn.adapter.customHook = function(data, cb) {
+    //   warn.to('room1').emit('warn', JSON.parse(data));
+    //   cb('hello ' + data);
+    // }
     socket.on('disconnect', function() {
       for (var i = user.length - 1; i >= 0; i--) {
         if (user[i].socketID === socket.id) {

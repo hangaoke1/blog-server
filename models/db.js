@@ -1,5 +1,6 @@
 console.log('DB模块引用');
 var mongoose = require('mongoose');
+var db;
 mongoose.Promise = Promise;
 
 mongoose.connection.on('connected', function(err) {
@@ -17,7 +18,7 @@ mongoose.connection.on('disconnected', function() {
 
 //mongoose.connect('mongodb://localhost/hangaoke');
 try {
-  mongoose.connect('mongodb://localhost/hangaoke', {
+  db = mongoose.connect('mongodb://localhost/hangaoke', {
     server: {
       auto_reconnect: true,
       // poolSize: 10,
@@ -28,7 +29,7 @@ try {
     }
   }); //- starting a db connection
 } catch (err) {
-  mongoose.createConnection('mongodb://localhost/hangaoke', {
+  db = mongoose.createConnection('mongodb://localhost/hangaoke', {
     server: {
       auto_reconnect: true,
       // poolSize: 10,
@@ -40,8 +41,7 @@ try {
   }); //- starting another db connection
 }
 
-
-
+// 表schemaArticals , schemaAccount
 var config = {
   schemaArticals: {
     title: String,
@@ -56,7 +56,9 @@ var config = {
     password: String,
     name: String,
     icon: String,
-    action: String
+    action: String,
+    safeCode: String,
+    salt: String
   }
 }
 var DB = function() {
@@ -65,16 +67,19 @@ var DB = function() {
   }
   //  返回对应表（collection）实例
 DB.prototype.getConnection = function(table_name) {
+    //  没有table_name入参
     if (!table_name) {
       return;
     }
+    //  配置中没有对应的表
     if (!this.config[table_name]) {
       return;
     }
+    //  如果mongoClient中已经有对应表的实例 直接返回该实例
     var client = this.mongoClient[table_name];
     if (!client) {
-      //构建用户信息表结构
-      var nodeSchema = new mongoose.Schema(this.config[table_name]);
+      //构建表结构
+      var nodeSchema = new mongoose.Schema(this.config[table_name],{versionKey:false});
 
       //构建model
       client = mongoose.model(table_name, nodeSchema);

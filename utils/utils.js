@@ -22,7 +22,7 @@ function resMsg(code, message, data, page) {
     return {
       code: code,
       message: message,
-      data: data || {},
+      data: data || [],
       page: page
     }
   } else {

@@ -5,8 +5,6 @@ const resMsg = Hutils.resMsg;
 /**
  * 文章查询
  * /api/articals/search
- * @param  {[type]}   req  {}
- * @param  {[type]}   res  
  * {
  *   code:"",    状态码
  *   message:"", 状态信息  
@@ -17,16 +15,17 @@ const resMsg = Hutils.resMsg;
 exports.search = function(req, res, next) {
     var currentPage = parseInt(req.body.page.currentPage) || 1;
     var pageSize = parseInt(req.body.page.pageSize);
+    //  找到所有文章 按时间倒序
     var query = db.getConnection('schemaArticals').find({}).sort({ '_id': -1 });
     var pageTotal = 0;
     var pages = 0;
-    db.count('schemaArticals', {}, function(err, res) {
-      pageTotal = res;
+    db.count('schemaArticals', {}, function(err, count) {
+      pageTotal = count;
       pages = Math.ceil(pageTotal / pageSize);
     })
     query.skip((currentPage - 1) * pageSize);
     query.limit(pageSize);
-    query.exec(function(err, rs) {
+    query.exec(function(err, items) {
       if (err) return next(err);
       var page = {
         pageTotal: pageTotal,
@@ -34,20 +33,18 @@ exports.search = function(req, res, next) {
         currentPage: currentPage,
         pageSize: pageSize
       }
-      var data = resMsg("00", "文章加载成功", rs, page);
+      var data = resMsg("00", "文章加载成功", items, page);
       res.json(data);
     })
   }
   /**
    * 文章添加
    * /api/articals/add
-   * @param  {[type]}   req  
    * {
    *   title,    标题
    *   content,  内容
    *   type      类型
    * } 
-   * @param  {[type]}   res  
    * {
    *   code:"",    状态码
    *   message:"", 状态信息  
@@ -57,7 +54,7 @@ exports.search = function(req, res, next) {
 exports.add = function(req, res, next) {
   if (req.session.user) {
     if (req.session.user.action != 1) {
-      var data = resMsg('9993', '权限不足')
+      var data = resMsg('11', '权限不足')
       res.json(data);
       return false;
     }
@@ -78,7 +75,7 @@ exports.add = function(req, res, next) {
       res.json(data);
     })
   } else {
-    var data = resMsg('9995', '请先登陆')
+    var data = resMsg('11', '请先登陆')
     res.json(data);
   }
 }

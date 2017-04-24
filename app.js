@@ -10,7 +10,8 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const morgan = require('morgan');
-// console.log(process.env.REMOTE_ADDR)
+// 启动NODE_ENV=production node app.js
+// console.log(process.env.NODE_ENV)
 const http = require('http');
 const https = require('https');
 var certificate = fs.readFileSync('file.crt', 'utf8');
@@ -43,7 +44,7 @@ app.all('*', function(req, res, next) {
     next();
   }
 });
-app.use(morgan('short'));
+// app.use(morgan('short'));
 app.use(cookieParser('sessiontest'));
 app.use(session({
   store: new RedisStore({
@@ -71,23 +72,27 @@ app.use('/hgk', function(req, res) {
     res.end('hello hangaoke');
   })
   // websocket全网告示快捷入口
+io.of('/warnTips').adapter.customHook = function(data, cb) {
+  io.of('/warnTips').to('room1').emit('warn', JSON.parse(data));
+  cb('hello ' + data);
+}
 app.use('/warn', function(req, res, next) {
   var time = req.body.time;
   var message = req.body.message;
   var msg = {
-      time,
-      message
-    }
+    time,
+    message
+  }
   console.log(io.of('/warnTips').adapter.sids)
     // pub.publish('hgk','aaaaaaa1');
     // res.end('hello world')
   io.of('/warnTips').adapter.customRequest(JSON.stringify(msg), function(err, replies) {
     console.log(replies); // an array ['hello john', ...] with one element per node
   });
-  io.of('/warnTips').adapter.clients(function (error, clients) {
+  io.of('/warnTips').adapter.clients(function(error, clients) {
     if (error) throw error;
     console.log(clients); // => [Anw2LatarvGVVXEIAAAD]
-    res.end('res by app.js hello world! clients in room1:' + clients.length +'-------'+JSON.stringify(user));
+    res.end('res by app.js hello world! clients in room1:' + clients.length + '-------' + JSON.stringify(user));
   });
 })
 app.use('/', index)
@@ -95,10 +100,12 @@ app.use('/', index)
 //全局error中间件
 app.use(function(err, req, res, next) {
   console.log("Error happens", err.stack);
+  res.status(500);
+  res.send(err.stack);
 });
 httpServer.listen(3000, function() {
   console.log('HTTP Server is running on: http://localhost:%s', 3000);
 });
-httpsServer.listen(3001, function() {
-  console.log('HTTPS Server is running on: http://localhost:%s', 3001);
-});
+// httpsServer.listen(3001, function() {
+//   console.log('HTTPS Server is running on: http://localhost:%s', 3001);
+// });
