@@ -33,6 +33,7 @@ app.use(cookieParser())
 app.use('/up', function(req, res) {
   res.setHeader('Content-Type', 'text/html;charset=utf-8');
   res.sendFile(path.join(__dirname + '/up.html'));
+  console.log('hahha');
 })
 app.use('/upload', upload.single('file'), function(req, res) {
   var tmp_path = req.file.path;
